@@ -1,7 +1,4 @@
-
-
 import React from 'react'
-
 
 
 class PlayPause extends React.Component {
@@ -25,7 +22,7 @@ class PlayPause extends React.Component {
     }      
       
     render() {
-        var className = this.state.clicked ? "fa fa-pause" : "fa fa-play";
+        var className = this.state.clicked ? "fa fa-pause fa-lg" : "fa fa-play fa-lg";
         return (
             <div className="playpause">
                 <button className="playbtn" onClick={this.handleClick} > <i className= {className}  > </i></button>
