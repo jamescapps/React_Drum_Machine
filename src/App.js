@@ -95,7 +95,6 @@ checkElectro() {
   electroInput.checked = true;
   rockInput.disabled = false;
   hipHopInput.disabled = false;
-  
 }
 
 
@@ -127,7 +126,6 @@ checkRock() {
     rockInput.checked = false;
     rockInput.disabled = false;
     hipHopInput.disabled = true;
-    
   }
 
   first_click = true;
