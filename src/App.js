@@ -3,11 +3,9 @@ import React from 'react';
 import './App.css';
 
 import Drums from "./Components/Drums"
-
 import Slider from "./Components/Slider"
 import PlayPause from './Components/PlayPause';
 import Tone from 'tone'
-
 
 
 class App extends React.Component {
@@ -15,8 +13,8 @@ class App extends React.Component {
     super(props);
       this.state = {
                     name: 'Make a beat!', 
-                    color: "",
-                    }
+                    color: ""
+                  }
       this.repeat = this.repeat.bind(this)
       this.playAudio = this.playAudio.bind(this)
       this.pauseAudio = this.pauseAudio.bind(this)
@@ -26,24 +24,22 @@ class App extends React.Component {
       this.checkHipHop = this.checkHipHop.bind(this)
   }
 
-  
-    
   componentDidMount() {
-    let electroInput = document.querySelector(".electro input[type=checkbox]")
-    let rockInput = document.querySelector(".rock input[type=checkbox]")
-    let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-     //Where do I put above so that I don't have to do it every time?
+    this.electroInput = document.querySelector(".electro input[type=checkbox]")
+    this.rockInput = document.querySelector(".rock input[type=checkbox]")
+    this.hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
+   
     window.onload = this.checkElectro();    
 
-    if (electroInput.checked) {
+    if (this.electroInput.checked) {
       this.checkElectro();
     }
     
-    if (rockInput.checked) {
+    if (this.rockInput.checked) {
       this.checkRock();
     }
 
-    if (hipHopInput.checked) {
+    if (this.hipHopInput.checked) {
       this.checkHipHop();
     }
 
@@ -52,80 +48,63 @@ class App extends React.Component {
     Tone.Transport.scheduleRepeat(this.repeat, "8n");
   }
     
+  repeat() {
+    if (this.index > 9) {
+      this.index = 2;     
+    }
 
- 
- repeat() {
-  if (this.index > 9) {
-    this.index = 2;     
- }
+    let kickInputs = document.querySelector(
+       `.kick input:nth-child(${this.index})`
+    );
+    let snareInputs = document.querySelector(
+      `.snare input:nth-child(${this.index})`
+    );
+    let hihatInputs = document.querySelector(
+       `.hihat input:nth-child(${this.index})`
+    );
 
- let kickInputs = document.querySelector(
-     `.kick input:nth-child(${this.index})`
- );
- let snareInputs = document.querySelector(
-   `.snare input:nth-child(${this.index})`
- );
- let hihatInputs = document.querySelector(
-     `.hihat input:nth-child(${this.index})`
- );
+    if(kickInputs.checked) {
+      this.kick.start();
+    }
+    if(snareInputs.checked) {
+      this.snare.start();
+    }
+    if(hihatInputs.checked) {
+      this.hihat.start();
+    }
 
- if(kickInputs.checked) {
-    this.kick.start();
-  }
- if(snareInputs.checked) {
-    this.snare.start();
-  }
- if(hihatInputs.checked) {
-    this.hihat.start();
-  }
-
-this.index++;
-}
+    this.index++;
+  } 
   
-checkElectro() {
-  let electroInput = document.querySelector(".electro input[type=checkbox]")
-  let rockInput = document.querySelector(".rock input[type=checkbox]")
-  let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-  //Where do I put above so that I don't have to do it every time?
-  this.kick = new Tone.Player("./electrokick.wav").toMaster()
-  this.snare = new Tone.Player("./electrosnare.wav").toMaster()
-  this.hihat = new Tone.Player("./electrohihat.wav").toMaster()
-  rockInput.checked = false;
-  hipHopInput.checked = false;
-  electroInput.checked = true;
-  rockInput.disabled = false;
-  hipHopInput.disabled = false;
-}
+  checkElectro() {
+    this.kick = new Tone.Player("./electrokick.wav").toMaster()
+    this.snare = new Tone.Player("./electrosnare.wav").toMaster()
+    this.hihat = new Tone.Player("./electrohihat.wav").toMaster()
+    this.rockInput.checked = false;
+    this.hipHopInput.checked = false;
+    this.electroInput.checked = true;
+    this.rockInput.disabled = false;
+    this.hipHopInput.disabled = false;
+  }
 
-
-  
-checkRock() {
-    let rockInput = document.querySelector(".rock input[type=checkbox]")
-    let electroInput = document.querySelector(".electro input[type=checkbox]")
-    let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-    //Where do I put above so that I don't have to do it every time?
+  checkRock() {
     this.kick = new Tone.Player("./rockkick.wav").toMaster()
     this.snare = new Tone.Player("./rocksnare.wav").toMaster()
     this.hihat = new Tone.Player("./rockhihat.wav").toMaster()
-    electroInput.checked = false;
-    hipHopInput.checked = false;
-    rockInput.disabled = true;
-    hipHopInput.disabled = false;
-    
-}
+    this.electroInput.checked = false;
+    this.hipHopInput.checked = false;
+    this.rockInput.disabled = true;
+    this.hipHopInput.disabled = false;
+  }
 
   checkHipHop() {
-    let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-    let electroInput = document.querySelector(".electro input[type=checkbox]")
-    let rockInput = document.querySelector(".rock input[type=checkbox]")
-    //Where do I put above so that I don't have to do it every time?
     this.kick = new Tone.Player("./hiphopkick.wav").toMaster()
     this.snare = new Tone.Player("./hiphopsnare.wav").toMaster()
     this.hihat = new Tone.Player("./hiphophihat.wav").toMaster()
-    electroInput.checked = false;
-    rockInput.checked = false;
-    rockInput.disabled = false;
-    hipHopInput.disabled = true;
+    this.electroInput.checked = false;
+    this.rockInput.checked = false;
+    this.rockInput.disabled = false;
+    this.hipHopInput.disabled = true;
   }
 
   first_click = true;
@@ -140,36 +119,22 @@ checkRock() {
     }
   }
 
-    
-
   playAudio() {
-    let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-    let electroInput = document.querySelector(".electro input[type=checkbox]")
-    let rockInput = document.querySelector(".rock input[type=checkbox]")
-        //Where do I put above so that I don't have to do it every time?
     this.setState({name: 'Playing'})
     this.setState({color: "red"})
     Tone.Transport.start();
-
-    //Below prevents user from switching drum kits while loop is playing, thus preventing the buffer error that occurs some of the time.
-    rockInput.disabled = true;
-    hipHopInput.disabled = true;
-    electroInput.disabled = true;
+    this.rockInput.disabled = true;
+    this.hipHopInput.disabled = true;
+    this.electroInput.disabled = true;
   }
     
   pauseAudio() {
-    let hipHopInput = document.querySelector(".hiphop input[type=checkbox]")
-    let electroInput = document.querySelector(".electro input[type=checkbox]")
-    let rockInput = document.querySelector(".rock input[type=checkbox]")
-     //Where do I put above so that I don't have to do it every time?
     this.setState({name: 'Paused'})
     this.setState({color: ''})
     Tone.Transport.pause();
-
-    //Below reenables the ability to switch between drum kits.
-    rockInput.disabled = false;
-    hipHopInput.disabled = false;
-    electroInput.disabled = false;
+    this.rockInput.disabled = false;
+    this.hipHopInput.disabled = false;
+    this.electroInput.disabled = false;
   }
 
   render() {
