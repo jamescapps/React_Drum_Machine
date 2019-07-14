@@ -2,6 +2,7 @@ import React from 'react';
 
 import './App.css';
 
+import Sets from "./Components/Sets"
 import Drums from "./Components/Drums"
 import Slider from "./Components/Slider"
 import PlayPause from './Components/PlayPause';
@@ -135,21 +136,27 @@ class App extends React.Component {
     this.rockInput.disabled = false;
     this.hipHopInput.disabled = false;
     this.electroInput.disabled = false;
+
+    if (this.rockInput.checked) {
+      this.rockInput.disabled = true;
+    }
+
+    if (this.hipHopInput.checked) {
+      this.hipHopInput.disabled = true;
+    }
   }
 
   render() {
     return (
       <div className = "container">
        <h1 style={{color: this.state.color}}>Drum Machine</h1><br></br><br></br>
-       <div className = "sets">
-        <div className = "electro"><h5>Electro</h5><input type="checkbox" onClick={this.checkElectro} className = "check1"/></div>
-        <div className = "rock"><h5>Rock</h5><input type="checkbox" onClick={this.checkRock} className = "check2"/></div>
-        <div className = "hiphop"><h5>HipHop</h5><input type="checkbox" onClick={this.checkHipHop} className = "check3"/></div> 
-       </div>
+        <Sets 
+          checkElectro={this.checkElectro}
+          checkHipHop={this.checkHipHop}
+          checkRock={this.checkRock}/>
          <Drums/>
           <h4 style={{color: this.state.color}}>{this.state.name}</h4><br></br>
-          <PlayPause 
-            playAndPause={this.playAndPause}/>
+          <PlayPause playAndPause={this.playAndPause}/>
           <Slider />
       </div>
     )   
