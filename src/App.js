@@ -11,7 +11,7 @@ import Tone from 'tone'
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super()
       this.state = {
                     name: 'Make a beat!', 
                     color: ""
