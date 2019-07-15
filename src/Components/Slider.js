@@ -3,10 +3,7 @@ import React from "react"
 import Tone from 'tone'
 
 class Slider extends React.Component {
-   constructor() {
-       super()
-       this.handleChange = this.handleChange.bind(this)
-   }
+   
    componentDidMount() {
     this.beats.addEventListener("change", this.handleChange);
    }
